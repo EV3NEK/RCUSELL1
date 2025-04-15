@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sklep z Petami RCU</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url("png1.png") no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      color: white;
+    }
+
+    .overlay {
+      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.5);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 30px;
+    }
+
+    .pets-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .pet {
+      background: rgba(34, 34, 34, 0.7);
+      padding: 15px;
+      width: 280px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px #000;
+      text-align: center;
+      backdrop-filter: blur(6px);
+    }
+
+    .pet img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .toxic img {
+      filter: hue-rotate(90deg) brightness(1.2);
+    }
+
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+      width: 90%;
+      border: none;
+      border-radius: 8px;
+    }
+
+    input {
+      background: #333;
+      color: white;
+    }
+
+    button {
+      background: #00cc66;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #00b359;
+    }
+
+    @media (max-width: 900px) {
+      .pets-container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <h1>🐾 Sklep z Petami - RCU</h1>
+    <p style="text-align:center;">Wybierz wariant peta 25M Eternal:</p>
+
+    <div class="pets-container">
+      <!-- Normal -->
+      <div class="pet">
+        <img src="pet3.png" alt="25M Eternal Normal" />
+        <h2>25M Eternal - Normal</h2>
+        <p>Cena: 35 tokenów</p>
+        <input type="text" placeholder="Nick z Roblox" id="roblox1">
+        <input type="text" placeholder="Twój Discord (np. user#1234)" id="discord1">
+        <button onclick="kupPeta('25M Eternal - Normal', 35, 'roblox1', 'discord1')">Kup</button>
+      </div>
+
+      <!-- Gold -->
+      <div class="pet">
+        <img src="pet2.png" alt="25M Eternal Gold" />
+        <h2>25M Eternal - Gold</h2>
+        <p>Cena: 170 tokenów</p>
+        <input type="text" placeholder="Nick z Roblox" id="roblox2">
+        <input type="text" placeholder="Twój Discord (np. user#1234)" id="discord2">
+        <button onclick="kupPeta('25M Eternal - Gold', 170, 'roblox2', 'discord2')">Kup</button>
+      </div>
+
+      <!-- Toxic -->
+      <div class="pet toxic">
+        <img src="pet2.png" alt="25M Eternal Toxic" />
+        <h2>25M Eternal - Toxic</h2>
+        <p>Cena: 850 tokenów</p>
+        <input type="text" placeholder="Nick z Roblox" id="roblox3">
+        <input type="text" placeholder="Twój Discord (np. user#1234)" id="discord3">
+        <button onclick="kupPeta('25M Eternal - Toxic', 850, 'roblox3', 'discord3')">Kup</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function kupPeta(petName, price, robloxId, discordId) {
+      const robloxNick = document.getElementById(robloxId).value;
+      const discordNick = document.getElementById(discordId).value;
+
+      if (!robloxNick || !discordNick) {
+        return alert("Wpisz nick z Roblox i Discord!");
+      }
+
+      const payload = {
+        content: `📦 **Nowe zamówienie!**\nPet: **${petName}**\nCena: ${price} tokenów\n🎮 Roblox: \`${robloxNick}\`\n💬 Discord: \`${discordNick}\``
+      };
+
+      await fetch("https://discord.com/api/webhooks/1361772245185204374/LYW1rCDKpsSR2osaRuRyGLz9959StopLLd5olEcdfW7Y8hJ6rADGyRzfnNb7Lwf7GSLa", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      alert("Zamówienie wysłane! 🔔 Sprawdź Discorda.");
+    }
+  </script>
+</body>
+</html>
